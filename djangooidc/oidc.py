@@ -58,7 +58,10 @@ class Client(oic.Client):
         logger.info("URL: %s" % url)
         logger.debug("ht_args: %s" % ht_args)
 
-        resp = HttpResponseRedirect(url.decode("utf-8"))
+        # url is a newstr
+        b = bytes(url)
+        url = b.decode('utf-8', 'surrogateescape')
+        resp = HttpResponseRedirect(url)
         if ht_args:
             for key, value in ht_args.items():
                 resp[key] = value
